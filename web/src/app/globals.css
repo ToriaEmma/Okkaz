@@ -1,0 +1,32 @@
+@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+
+/* Override to use SemiBold weight everywhere */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --primary: #250C69;
+  --accent: #3B82F6;
+  --action: #F97316;
+  --success: #16A34A;
+  --secondary: #FFD9CF;
+  --white: #ffffff;
+  --background: #ffffff;
+  --foreground: #171717;
+  --border: #e2e8f0;
+}
+
+body {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 600; /* SemiBold */
+  color: var(--foreground);
+  background: var(--background);
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a, button, li, label, input, textarea {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 600; /* SemiBold */
+}
