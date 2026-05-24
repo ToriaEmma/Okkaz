@@ -3,7 +3,7 @@
   color: white;
   display: flex;
   flex-direction: column;
-  font-family: 'PublicaPlay', sans-serif;
+  font-family: var(--font-interface);
   overflow: hidden;
 }
 
@@ -43,10 +43,12 @@
 }
 
 .emailDesc {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 560;
   color: #ccc;
-  line-height: 1.4;
-  max-width: 200px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  max-width: 280px;
 }
 
 .emailTitleContainer {
@@ -57,10 +59,10 @@
 
 .emailTitle {
   font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
+  font-weight: 760;
   margin: 0;
-  letter-spacing: -0.02em;
-  font-family: 'PublicaPlay', sans-serif;
+  letter-spacing: -0.045em;
+  font-family: var(--font-interface);
   word-break: break-all;
 }
 
@@ -76,11 +78,11 @@
 }
 
 .ctaTitle {
-  font-size: 1.8rem;
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 760;
   margin: 0;
-  font-family: 'PublicaPlay', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-interface);
+  letter-spacing: -0.045em;
 }
 
 .ctaButton {
@@ -101,8 +103,10 @@
 }
 
 .ctaButtonText {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .middleRow {
@@ -114,17 +118,29 @@
 }
 
 .links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 0.65rem 2rem;
+  max-width: 520px;
+}
+
+.linksTitle {
+  grid-column: 1 / -1;
+  margin: 0 0 0.45rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .linkItem {
   color: white;
   text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-family: 'PublicaPlay', sans-serif;
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-weight: 680;
+  font-family: var(--font-interface);
+  letter-spacing: -0.025em;
   transition: color 0.3s ease;
 }
 
@@ -141,16 +157,19 @@
 }
 
 .addressTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   margin: 0;
-  font-family: 'PublicaPlay', sans-serif;
+  font-family: var(--font-interface);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .addressText {
   color: #ccc;
   font-size: 0.9rem;
   line-height: 1.6;
+  font-weight: 520;
   max-width: 200px;
 }
 
@@ -162,11 +181,11 @@
 
 .hugeText {
   font-size: clamp(8rem, 21vw, 22vw);
-  font-weight: 900;
+  font-weight: 600;
   margin: 0;
   line-height: 0.75;
   letter-spacing: -0.05em;
-  font-family: 'PublicaPlay', sans-serif;
+  font-family: var(--font-brand);
   display: flex;
   justify-content: center;
 }
@@ -200,8 +219,10 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .bottomBarLocation {
@@ -288,6 +309,10 @@
 
   .emailTitle {
     font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  .links {
+    grid-template-columns: 1fr;
   }
 
   .linkItem, .addressTitle {

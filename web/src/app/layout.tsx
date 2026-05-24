@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import ConditionalFooter from "@/components/layout/ConditionalFooter";
+
 
 export const metadata: Metadata = {
   title: "OKKAZ - Location & LOA au Bénin",
@@ -20,10 +21,10 @@ export default function RootLayout({
     <html lang="fr">
       <body>
         <Navbar />
-        <main style={{ minHeight: 'calc(100vh - 80px)' }}>
+        <main>
           {children}
         </main>
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   );

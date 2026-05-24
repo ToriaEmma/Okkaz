@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -56,22 +57,27 @@ export default function TextRevealSection() {
         <div className={styles.textWrapper}>
           {/* Base (gray) text */}
           <h2 className={styles.textBase}>
-            L'accès aux biens<br />devient réalité.
+            Posséder moins.<br />Accéder mieux.
           </h2>
           {/* Revealed (dark) text clipped by mask */}
           <h2 className={styles.textReveal} ref={textRevealRef} aria-hidden>
-            L'accès aux biens<br />devient réalité.
+            Posséder moins.<br />Accéder mieux.
           </h2>
         </div>
 
         {/* CTA that appears after text reveal */}
         <div className={styles.cta} ref={ctaRef}>
           <p className={styles.ctaText}>
-            Prêt à commencer avec OKKAZ ?
+            Commencez avec un parcours clair.
           </p>
-          <button className={styles.ctaButton}>
-            Rejoindre la plateforme →
-          </button>
+          <div className={styles.ctaActions}>
+            <Link href="/annonces" className={styles.ctaButton}>
+              Trouver un bien
+            </Link>
+            <Link href="/admin" className={`${styles.ctaButton} ${styles.ctaButtonSecondary}`}>
+              Publier un bien
+            </Link>
+          </div>
         </div>
       </div>
     </section>

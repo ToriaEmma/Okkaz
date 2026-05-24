@@ -47,7 +47,7 @@ export default function Footer() {
               <div className={styles.decoratorLine}></div>
             </div>
             <p className={styles.emailDesc}>
-              Découvrez la puissance de Okkaz sur
+              Une question, une annonce ou un partenariat.
             </p>
             <div className={styles.emailTitleContainer}>
               <h2 className={styles.emailTitle}>contact@okkaz.bj</h2>
@@ -56,9 +56,9 @@ export default function Footer() {
 
           {/* Right: CTA Box */}
           <div className={styles.ctaBox}>
-            <h3 className={styles.ctaTitle}>Commencer</h3>
+            <h3 className={styles.ctaTitle}>Entrer</h3>
             <div className={styles.ctaButton}>
-              <span className={styles.ctaButtonText}>Go</span>
+              <span className={styles.ctaButtonText}>Démarrer</span>
               <span>→</span>
             </div>
           </div>
@@ -70,9 +70,15 @@ export default function Footer() {
           
           {/* Left Links */}
           <div className={styles.links}>
-            <Link href="/" className={styles.linkItem}>Produits</Link>
-            <Link href="/annonces" className={styles.linkItem}>Tarifs</Link>
-            <Link href="/admin" className={styles.linkItem}>Nous Contacter</Link>
+            <h4 className={styles.linksTitle}>Liens utiles</h4>
+            <Link href="/" className={styles.linkItem}>Accueil</Link>
+            <Link href="/annonces" className={styles.linkItem}>Trouver un bien</Link>
+            <Link href="/admin" className={styles.linkItem}>Publier un bien</Link>
+            <Link href="/annonces" className={styles.linkItem}>Catégories</Link>
+            <Link href="/admin" className={styles.linkItem}>Espace propriétaire</Link>
+            <Link href="#" className={styles.linkItem}>Aide & contact</Link>
+            <Link href="#" className={styles.linkItem}>CGU</Link>
+            <Link href="#" className={styles.linkItem}>Confidentialité</Link>
           </div>
 
           {/* Right Address */}

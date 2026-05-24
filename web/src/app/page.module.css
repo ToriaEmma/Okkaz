@@ -6,7 +6,7 @@
   position: relative;
   height: 100vh;
   width: 100%;
-  background-color: #f4f6f7;
+  background-color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,9 +15,9 @@
 
 .heroBackgroundTextContainer {
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
-  transform: translate(-40%, -50%);
+  transform: translate(-36%, -50%);
   width: 100%;
   text-align: center;
   z-index: 1;
@@ -25,25 +25,44 @@
 }
 
 .heroBackgroundText {
-  font-size: 38vw;
-  font-weight: 900;
-  color: #0f1114;
+  font-size: 34vw;
+  font-weight: 600;
+  color: #171717;
   margin: 0;
   line-height: 0.8;
   letter-spacing: -0.06em;
-  font-family: 'Gilroy', sans-serif;
+  font-family: var(--font-brand);
   display: flex;
   justify-content: center;
 }
 
 .heroLetterWrapper {
   display: inline-block;
+  position: relative;
+  transform-origin: center bottom;
+  will-change: transform;
 }
 
 .heroAnimatedLetter {
   display: inline-block;
   opacity: 0;
   animation: heroFadeIn 0.5s ease forwards;
+}
+
+.heroKImage {
+  position: absolute;
+  left: 50%;
+  bottom: -2%;
+  width: 1.22em;
+  height: 0.56em;
+  transform: translateX(-44%);
+  background-image: url('/img.PNG');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 0.08em 0.1em rgba(0, 0, 0, 0.22));
 }
 
 @keyframes heroFadeIn {
@@ -85,7 +104,7 @@
 
 .heroOverlayContent {
   position: absolute;
-  bottom: 0;
+  bottom: 3rem;
   left: 0;
   width: 100%;
   padding: 3rem;
@@ -98,21 +117,23 @@
 }
 
 .scrollIndicator {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #888;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.16em;
   padding-bottom: 0.5rem;
 }
 
 .heroBottomText h2 {
-  font-size: 2.5rem;
-  line-height: 1.1;
-  color: #1a1a1a;
+  font-family: var(--font-interface);
+  font-size: clamp(1.5rem, 2.55vw, 2.7rem);
+  line-height: 0.96;
+  color: #171717;
   margin: 0;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-weight: 680;
+  letter-spacing: -0.035em;
+  transform: translateX(2rem);
 }
 
 @media (max-width: 1024px) {
@@ -122,19 +143,33 @@
   }
 
   .heroBottomText h2 {
-    font-size: 2.5rem;
+    font-size: 1.6rem;
   }
 }
 
 @media (max-width: 768px) {
+  .newHero {
+    height: 100svh;
+    min-height: 620px;
+    align-items: flex-start;
+  }
+
   .heroBackgroundTextContainer {
-    top: 35%;
-    left: 58%;
-    transform: translate(-50%, 0);
+    top: 38%;
+    left: 63%;
+    width: max-content;
+    transform: translate(-50%, -50%);
   }
 
   .heroBackgroundText {
-    font-size: 38vw;
+    font-size: clamp(7.5rem, 35vw, 10rem);
+    line-height: 0.82;
+  }
+
+  .heroKImage {
+    width: 1.08em;
+    height: 0.52em;
+    bottom: -8%;
   }
 
   .heroImageWrapper {
@@ -144,17 +179,21 @@
 
   .heroOverlayContent {
     top: auto;
-    bottom: 22%;
-    padding: 0 2rem 0 3.5rem; /* Increased left padding to push it right */
+    bottom: max(5.5rem, env(safe-area-inset-bottom));
+    padding: 0 1.25rem 2rem;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-end;
     width: 100%;
     text-align: left;
+    gap: 0;
   }
 
   .heroBottomText h2 {
-    font-size: 1.4rem;
+    max-width: 13rem;
+    font-size: clamp(1.45rem, 7vw, 2rem);
+    line-height: 0.98;
+    transform: translateX(4rem);
   }
 
   .scrollIndicator {
@@ -2941,7 +2980,7 @@
 /* ─── NEW SECTIONS ────────────────────────────────────── */
 
 .missionSection {
-  padding: 8vw 4vw 2vw 4vw;
+  padding: 8vw 4vw 4.5vw 4vw;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -2949,22 +2988,11 @@
 }
 
 .sectionSubtitle {
-  font-size: 1.2rem;
-  color: #888;
-  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
-}
-
-.missionText {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-family: 'Gilroy', sans-serif;
-  font-weight: 900;
-  color: #1a1a1a;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  max-width: 90%;
+  letter-spacing: 0.18em;
   margin: 0;
 }
 
@@ -2988,31 +3016,31 @@
   flex-direction: column;
   gap: 0.8rem;
   cursor: pointer;
+  text-decoration: none;
+  border-radius: 22px;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .cardImagePlaceholder {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 32px;
+  aspect-ratio: 16 / 8.8;
+  border-radius: 22px;
   background-color: #e5e7eb;
   overflow: hidden;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.galleryCard:hover .cardImagePlaceholder {
-  transform: scale(1.03);
-  border-radius: 24px;
-}
-
 .cardTitle {
-  font-size: 2.5rem;
-  font-family: 'Gilroy', sans-serif;
-  font-weight: 800;
+  font-size: clamp(1.4rem, 3.1vw, 2.7rem);
+  font-family: var(--font-interface);
+  font-weight: 750;
   color: white;
   margin: 0;
   margin-top: -5rem;
   padding-left: 1.5rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
   z-index: 10;
   position: relative;
   display: inline-block;
@@ -3022,9 +3050,9 @@
 .cardTitle::before {
   content: '';
   position: absolute;
-  left: -2.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
+  left: -2rem;
+  width: 1.35rem;
+  height: 1.35rem;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>');
   background-size: contain;
   background-repeat: no-repeat;
@@ -3035,13 +3063,27 @@
   transform: translateY(-50%);
 }
 
-.galleryCard:hover .cardTitle {
-  transform: translateX(2rem);
-}
+@media (min-width: 769px) and (hover: hover) {
+  .galleryCard:hover {
+    transform: scale(0.992);
+    opacity: 0.96;
+  }
 
-.galleryCard:hover .cardTitle::before {
-  opacity: 1;
-  left: -1.2rem;
+  .galleryCard:hover .cardImagePlaceholder {
+    transform: scale(0.985);
+    border-radius: 18px;
+    filter: brightness(0.78) saturate(1.08);
+  }
+
+  .galleryCard:hover .cardTitle {
+    transform: translateX(2.8rem);
+    color: white;
+  }
+
+  .galleryCard:hover .cardTitle::before {
+    opacity: 1;
+    left: -1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -3051,18 +3093,13 @@
   }
 
   .missionSection {
-    padding: 4vw 6vw 8vw 6vw;
+    padding: 4vw 6vw 10vw 6vw;
   }
   
   .gallerySection {
     padding: 6vw 6vw 12vw 6vw;
   }
   
-  .missionText {
-    font-size: clamp(2rem, 8vw, 3rem);
-    max-width: 100%;
-  }
-
   .sectionSubtitle {
     font-size: 1rem;
   }
@@ -3073,6 +3110,190 @@
   }
 
   .cardImagePlaceholder {
-    border-radius: 24px;
+    border-radius: 18px;
+  }
+}
+
+@media (hover: none) {
+  .galleryCard:active {
+    transform: scale(0.975);
+  }
+
+  .galleryCard:hover .cardImagePlaceholder {
+    transform: none;
+    border-radius: 18px;
+  }
+
+  .galleryCard:active .cardImagePlaceholder {
+    filter: brightness(0.78) saturate(1.08);
+    transform: none;
+  }
+
+  .galleryCard:hover .cardTitle {
+    transform: none;
+  }
+
+  .galleryCard:active .cardTitle {
+    color: var(--action);
+  }
+
+  .galleryCard:hover .cardTitle::before {
+    opacity: 0;
+    left: -2rem;
+  }
+}
+
+.ownerSection {
+  position: relative;
+  overflow: hidden;
+  background: var(--white);
+  padding: clamp(4rem, 8vw, 8rem) 4vw;
+}
+
+.ownerSection::before {
+  content: "";
+  position: absolute;
+  inset: 16% -6% auto;
+  height: 42%;
+  border-top: 2px dashed rgba(59, 130, 246, 0.22);
+  border-radius: 50%;
+  transform: rotate(-5deg);
+  pointer-events: none;
+}
+
+.ownerIntro {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+}
+
+.ownerEyebrow {
+  margin: 0 0 1.2rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ownerTitle {
+  margin: 0;
+  color: #090b0d;
+  font-family: var(--font-interface);
+  font-size: clamp(3rem, 7.4vw, 7.4rem);
+  font-weight: 760;
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+}
+
+.ownerStaticTitleText {
+  display: block;
+}
+
+.ownerMovingTitleLine {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.ownerMovingTitleText {
+  display: inline-block;
+  color: var(--accent);
+  will-change: transform;
+}
+
+.ownerCards {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2rem);
+  margin-top: clamp(3rem, 6vw, 5.5rem);
+  align-items: stretch;
+}
+
+.ownerCard {
+  min-height: clamp(280px, 25vw, 390px);
+  border-radius: 24px;
+  padding: clamp(1.2rem, 2.4vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #0f1114;
+  box-shadow: 0 18px 40px rgba(20, 18, 34, 0.08);
+  text-decoration: none;
+}
+
+.ownerCard:nth-child(1) {
+  transform: rotate(-7deg);
+}
+
+.ownerCard:nth-child(2) {
+  transform: translateY(1.8rem) rotate(2.5deg);
+}
+
+.ownerCard:nth-child(3) {
+  transform: rotate(-3.5deg);
+}
+
+.ownerCardPink {
+  background: var(--accent);
+}
+
+.ownerCardGreen {
+  background: var(--white);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.ownerCardOrange {
+  background: var(--action);
+}
+
+.ownerPill {
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.52rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: 820;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ownerCardGreen .ownerPill {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.ownerCard h3 {
+  max-width: 88%;
+  margin: auto 0 1rem;
+  font-size: clamp(2rem, 3.8vw, 3.35rem);
+  font-weight: 760;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+}
+
+.ownerCard p {
+  max-width: 88%;
+  margin: 0;
+  color: rgba(15, 17, 20, 0.7);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 560;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 900px) {
+  .ownerCards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .ownerCard,
+  .ownerCard:nth-child(1),
+  .ownerCard:nth-child(2),
+  .ownerCard:nth-child(3) {
+    transform: none;
   }
 }
