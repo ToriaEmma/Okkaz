@@ -33,7 +33,7 @@ export default function OwnerSection() {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 769px)", () => {
+    mm.add("(min-width: 0px)", () => {
       const cards = cardsRef.current.filter(Boolean);
       const finalStates = [
         { xPercent: 0, y: 0, rotation: -7 },

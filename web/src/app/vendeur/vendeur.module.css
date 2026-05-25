@@ -181,6 +181,105 @@
   font-weight: 900;
 }
 
+.pageHeader {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 6px 2px;
+}
+
+.pageHeaderTitle {
+  min-width: 0;
+}
+
+.pageHeaderTitle h1 {
+  margin: 0;
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.pageHeaderTitle p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.backBtn {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.backBtn:hover {
+  background: var(--ink);
+  color: #ffffff;
+  transform: translateX(-2px);
+  box-shadow: 0 12px 24px rgba(23, 22, 36, 0.18);
+}
+
+.headerCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 850;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 24px rgba(23, 22, 36, 0.2);
+}
+
+.headerCta:hover {
+  background: var(--blue);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(59, 130, 246, 0.32);
+}
+
+@media (max-width: 760px) {
+  .pageHeader {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .pageHeader .search,
+  .pageHeader .headerCta {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .headerCta {
+    min-height: 48px;
+    font-size: 0.86rem;
+  }
+
+  .backBtn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+}
+
 .dashboardGrid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(286px, 340px);
@@ -1395,6 +1494,106 @@
   display: none;
 }
 
+/* Photo slots grid (publier page) */
+.photoGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 10px;
+  max-width: 520px;
+}
+
+.photoSlot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  aspect-ratio: 4 / 3;
+  border: 2px dashed rgba(59, 130, 246, 0.28);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.photoSlot:hover {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+  color: var(--blue);
+  transform: translateY(-2px);
+}
+
+.photoSlotMain {
+  border-style: solid;
+  border-color: rgba(59, 130, 246, 0.5);
+  background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+  color: var(--blue);
+}
+
+.photoSlotBadge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #ffffff;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.photoSlotIcon {
+  display: grid;
+  place-items: center;
+}
+
+.photoSlotIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.photoSlotLabel {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.photoSlotPlus {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--blue);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.22);
+}
+
+.photoHint {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+@media (max-width: 760px) {
+  .photoGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
 .photoButtonText {
   display: inline-flex;
   align-items: center;
@@ -1632,19 +1831,20 @@
   border: 0;
   border-radius: 999px;
   padding: 0 26px;
-  background: linear-gradient(135deg, var(--blue), #2563eb);
+  background: #171624;
   color: #ffffff;
   font: inherit;
   font-size: 0.84rem;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 20px rgba(23, 22, 36, 0.18);
 }
 
 .btnSave:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+  background: #000000;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(23, 22, 36, 0.24);
 }
 
 .btnSave:active {
@@ -1726,3 +1926,774 @@
     justify-content: center;
   }
 }
+
+/* ============================================
+   PUBLISH PAGE — modern card form
+   ============================================ */
+
+.publishStepBadge {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.publishForm {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: #ffffff;
+  padding: 28px;
+  display: grid;
+  gap: 22px;
+  box-shadow: 0 20px 50px rgba(23, 22, 36, 0.06);
+}
+
+.publishActions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  margin-top: 4px;
+}
+
+@media (max-width: 760px) {
+  .publishStepBadge {
+    justify-self: start;
+  }
+
+  .publishForm {
+    padding: 18px;
+    border-radius: 18px;
+    gap: 18px;
+  }
+
+  .publishActions {
+    flex-direction: column;
+  }
+
+  .publishActions .btnCancel,
+  .publishActions .btnSave {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   DESIGN INSPIRED BY THE UPLOADED MOCKUP
+   ============================================ */
+
+.mockupContainer {
+  background: #ffffff;
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(23, 22, 36, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mockupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.mockupHeaderBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.mockupHeaderBtn:hover {
+  background: #f8fafc;
+  transform: scale(1.05);
+  border-color: #cbd5e1;
+}
+
+.mockupHeaderTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+  text-align: center;
+}
+
+.mockupProfileInfo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  position: relative;
+}
+
+.mockupAvatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mockupAvatarImg {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 22, 36, 0.12);
+}
+
+.mockupAvatarFallback {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  border: 3px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(23, 22, 36, 0.12);
+}
+
+.mockupProfileText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mockupProfileName {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.mockupProfileLocation {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0 0 6px 0;
+}
+
+.mockupProfileStats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mockupStatUnit {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.mockupStatLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.mockupStatValue {
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.mockupActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mockupActionBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.mockupActionBtn:hover {
+  background: #f8fafc;
+  color: var(--ink);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+/* Metric Pills Grid - 3 colored cards (reference design) */
+.mockupPillGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.mockupPill {
+  border-radius: 22px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 92px;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mockupPill:hover {
+  transform: translateY(-2px);
+}
+
+.mockupPillGreen {
+  background-color: #d7f0db;
+}
+
+.mockupPillBlue {
+  background-color: #d5ecfb;
+}
+
+.mockupPillOrange {
+  background-color: #ffe6b3;
+}
+
+.mockupPillLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+
+.mockupPillValue {
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.mockupPillGreen .mockupPillLabel {
+  color: #166534;
+}
+
+.mockupPillBlue .mockupPillLabel {
+  color: #1e40af;
+}
+
+.mockupPillOrange .mockupPillLabel {
+  color: #92400e;
+}
+
+.mockupPillGreen .mockupPillValue {
+  color: #15803d;
+}
+
+.mockupPillBlue .mockupPillValue {
+  color: #1d4ed8;
+}
+
+.mockupPillOrange .mockupPillValue {
+  color: #b45309;
+}
+
+/* Grouped List Settings Card */
+.mockupListGroup {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(23, 22, 36, 0.015);
+}
+
+.mockupListItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 14px 18px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(23, 22, 36, 0.05);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.mockupListItem:last-child {
+  border-bottom: 0;
+}
+
+.mockupListItem:hover {
+  background: rgba(23, 22, 36, 0.015);
+}
+
+.mockupListIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(23, 22, 36, 0.04);
+  color: #475569;
+  display: grid;
+  place-items: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.mockupListItem:hover .mockupListIcon {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.mockupListText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mockupListPrimary {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.mockupListSecondary {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.mockupListChevron {
+  color: #94a3b8;
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  transition: transform 0.2s ease;
+}
+
+.mockupListItem:hover .mockupListChevron {
+  transform: translateX(2px);
+  color: var(--blue);
+}
+
+/* Web Page Layout Split */
+.splitLayout {
+  display: grid;
+  grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 950px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Centered layout for mockup-only view */
+.centeredLayout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 0 24px;
+  width: 100%;
+}
+
+.mockupContainerForm {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Borderless inputs inside mockup items */
+.mockupRowInput {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #475569;
+  padding: 4px 0 0;
+  width: 100%;
+  transition: color 0.2s ease;
+}
+
+.mockupRowInput:focus {
+  color: var(--blue);
+}
+
+.mockupRowSelect {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #475569;
+  padding: 4px 0 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.mockupRowSelect:focus {
+  color: var(--blue);
+}
+
+.mockupRowGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.mockupHint {
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.mockupFormActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+/* Enhancing list item with focus indication */
+.mockupListItem:focus-within {
+  background: #ffffff;
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.05);
+}
+
+/* Uploader styling inside mockup */
+.mockupAvatarUploadArea {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(23, 22, 36, 0.1);
+  border: 3px solid #ffffff;
+  background: var(--blue);
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease;
+}
+
+.mockupAvatarUploadArea:hover {
+  transform: scale(1.03);
+}
+
+.mockupAvatarUploadArea img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mockupAvatarUploadFallback {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.mockupAvatarOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mockupAvatarUploadArea:hover .mockupAvatarOverlay {
+  opacity: 1;
+}
+
+.mockupAvatarOverlay span {
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mockupAvatarInfoText {
+  font-size: 0.68rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.mockupTabBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #171624;
+  border-radius: 999px;
+  padding: 6px 12px;
+  margin-top: 14px;
+  box-shadow: 0 10px 25px rgba(23, 22, 36, 0.16);
+}
+
+.mockupTabItem {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mockupTabItem:hover {
+  color: #ffffff;
+}
+
+/* ============================================
+   DASHBOARD WELCOME BLOCK
+   ============================================ */
+
+.welcomeText {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.welcomeText .kicker {
+  margin: 0;
+}
+
+.welcomeText h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+/* ============================================
+   DASHBOARD POLISH — colored stat cards & cards
+   ============================================ */
+
+.statCard {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.statCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px rgba(23, 22, 36, 0.08);
+}
+
+.statCardGreen > span {
+  background: #d7f0db;
+  color: #15803d;
+}
+
+.statCardBlue > span {
+  background: #d5ecfb;
+  color: #1d4ed8;
+}
+
+.statCardOrange > span {
+  background: #ffe6b3;
+  color: #b45309;
+}
+
+/* Card hover lift */
+.card {
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  box-shadow: 0 20px 44px rgba(23, 22, 36, 0.07);
+}
+
+/* Chart bars: smoother look + active day */
+.bar span {
+  background: #e2e8f0;
+  transition: background 0.2s ease, height 0.3s ease;
+}
+
+.bar:nth-child(4) span {
+  background: var(--ink);
+}
+
+.bar:hover span {
+  background: var(--blue);
+}
+
+/* Payment item highlight */
+.paymentItem {
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.paymentItem:hover {
+  background: rgba(59, 130, 246, 0.03);
+  transform: translateX(2px);
+}
+
+/* Action list hover */
+.actionList a {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.actionList a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(59, 130, 246, 0.3);
+}
+
+
+/* ============================================
+   DASHBOARD MOBILE IMPROVEMENTS
+   ============================================ */
+
+@media (max-width: 760px) {
+  /* Bigger heading touch / better hierarchy */
+  .content {
+    gap: 16px;
+  }
+
+  /* Stat cards: more breathing room on mobile */
+  .statsGrid {
+    gap: 10px;
+  }
+
+  .statCard {
+    min-height: 84px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  /* Activity chart: keep visible but compact */
+  .chart {
+    height: 140px;
+  }
+
+  /* Action list buttons: bigger touch area */
+  .actionList {
+    gap: 10px;
+  }
+
+  .actionList a {
+    min-height: 52px;
+    border-radius: 16px;
+    font-size: 0.86rem;
+  }
+
+  /* Row items: cleaner mobile look */
+  .rowItem {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  /* Payment / device list spacing */
+  .paymentItem {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  /* Card headers stack better */
+  .cardHeader a,
+  .cardHeader button {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .welcomeText p {
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  /* Stats become 2-column for compactness when only 3 items */
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .statCard {
+    min-height: 76px;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 12px 14px;
+  }
+
+  .statCard strong {
+    font-size: 1.35rem;
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .statCard p {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 0.84rem;
+  }
+
+  .statCard em {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 0.66rem;
+    margin-top: 0;
+  }
+
+  .statCard > span {
+    grid-row: 1 / span 2;
+  }
+
+  .chart {
+    height: 120px;
+    gap: 7px;
+  }
+
+  .bar {
+    height: 108px;
+  }
+
+  .actionList a {
+    min-height: 50px;
+    font-size: 0.82rem;
+  }
+}
+
+.mockupTabActive {
+  background: #ffffff;
+  color: #171624;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+

@@ -82,7 +82,7 @@ export default function AwsmdInspiredSection() {
       }
     );
 
-    mm.add("(min-width: 769px)", () => {
+    mm.add("(min-width: 0px)", () => {
       const cards = listingRefs.current.filter((card): card is HTMLAnchorElement => Boolean(card));
       const images = cards
         .map((card) => card.querySelector(`.${styles.imageWrap}`))

@@ -253,17 +253,8 @@
     max-width: 100%;
   }
 
-  .cardsWrapper {
-    height: auto;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
   .card {
-    position: relative;
     padding: 2rem;
-    height: auto;
-    min-height: 55vh; /* Increased to make cards longer */
     border-radius: 24px;
   }
 
@@ -299,3 +290,4 @@
     min-width: 0;
   }
 }
+

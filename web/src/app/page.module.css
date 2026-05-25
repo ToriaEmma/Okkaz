@@ -3116,30 +3116,80 @@
 
 @media (hover: none) {
   .galleryCard:active {
-    transform: scale(0.975);
-  }
-
-  .galleryCard:hover .cardImagePlaceholder {
-    transform: none;
-    border-radius: 18px;
+    transform: scale(0.992);
+    opacity: 0.96;
   }
 
   .galleryCard:active .cardImagePlaceholder {
+    transform: scale(0.985);
+    border-radius: 18px;
     filter: brightness(0.78) saturate(1.08);
-    transform: none;
-  }
-
-  .galleryCard:hover .cardTitle {
-    transform: none;
   }
 
   .galleryCard:active .cardTitle {
-    color: var(--action);
+    transform: translateX(2.8rem);
+    color: white;
   }
 
-  .galleryCard:hover .cardTitle::before {
-    opacity: 0;
-    left: -2rem;
+  .galleryCard:active .cardTitle::before {
+    opacity: 1;
+    left: -1.5rem;
+  }
+}
+
+/* Mobile: play the desktop hover animation once when the card enters the viewport */
+@media (max-width: 768px) {
+  .galleryCard[data-in-view="true"] {
+    animation: galleryCardOnce 2.4s ease-in-out both;
+  }
+
+  .galleryCard[data-in-view="true"] .cardImagePlaceholder {
+    animation: galleryImageOnce 2.4s ease-in-out both;
+  }
+
+  .galleryCard[data-in-view="true"] .cardTitle {
+    animation: galleryTitleOnce 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .galleryCard[data-in-view="true"] .cardTitle::before {
+    animation: galleryArrowOnce 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes galleryCardOnce {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  40%, 60% { transform: scale(0.992); opacity: 0.96; }
+}
+
+@keyframes galleryImageOnce {
+  0%, 100% {
+    transform: scale(1);
+    border-radius: 18px;
+    filter: brightness(1) saturate(1);
+  }
+  40%, 60% {
+    transform: scale(0.985);
+    border-radius: 18px;
+    filter: brightness(0.78) saturate(1.08);
+  }
+}
+
+@keyframes galleryTitleOnce {
+  0%, 100% { transform: translateX(0); color: white; }
+  40%, 60% { transform: translateX(2.8rem); color: white; }
+}
+
+@keyframes galleryArrowOnce {
+  0%, 100% { opacity: 0; left: -2rem; }
+  40%, 60% { opacity: 1; left: -1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galleryCard[data-in-view="true"],
+  .galleryCard[data-in-view="true"] .cardImagePlaceholder,
+  .galleryCard[data-in-view="true"] .cardTitle,
+  .galleryCard[data-in-view="true"] .cardTitle::before {
+    animation: none !important;
   }
 }
 
@@ -3288,12 +3338,5 @@
   .ownerCards {
     grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .ownerCard,
-  .ownerCard:nth-child(1),
-  .ownerCard:nth-child(2),
-  .ownerCard:nth-child(3) {
-    transform: none;
   }
 }
