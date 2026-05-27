@@ -17,20 +17,28 @@ export default function FooterMotionPath() {
   const markerRef = useRef<SVGGElement>(null);
 
   useGSAP(() => {
-    gsap.fromTo(
-      titleMovingRef.current,
-      { yPercent: 18 },
-      {
-        yPercent: -12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.25,
-        },
-      }
-    );
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 769px)", () => {
+      gsap.fromTo(
+        titleMovingRef.current,
+        { yPercent: 18 },
+        {
+          yPercent: -12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.25,
+          },
+        }
+      );
+    });
+
+    mm.add("(max-width: 768px)", () => {
+      gsap.set(titleMovingRef.current, { clearProps: "transform" });
+    });
 
     if (!pathRef.current || !markerRef.current) return;
 
@@ -43,7 +51,7 @@ export default function FooterMotionPath() {
 
     if (reduceMotion) {
       gsap.set(markerRef.current, { x: 8, y: 102 });
-      return;
+      return () => mm.revert();
     }
 
     gsap.to(markerRef.current, {
@@ -58,6 +66,7 @@ export default function FooterMotionPath() {
         autoRotate: true,
       },
     });
+    return () => mm.revert();
   }, { scope: sectionRef });
 
   return (

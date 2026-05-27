@@ -88,7 +88,7 @@ export default function StackedCards() {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 0px)", () => {
+    mm.add("(min-width: 769px)", () => {
       // Initial state: first card is visible, others are moved down by 150vh
       gsap.set(cardsRef.current, {
         y: (i) => (i === 0 ? 0 : window.innerHeight * 1.5)
@@ -160,6 +160,16 @@ export default function StackedCards() {
       });
 
       tl.addLabel("end", CARDS.length - 1);
+    });
+
+    mm.add("(max-width: 768px)", () => {
+      gsap.set(cardsRef.current, {
+        clearProps: "transform,opacity,visibility,scale",
+      });
+      gsap.set(`.${styles.cardBody}, .${styles.cardFooter}`, {
+        clearProps: "transform,opacity,visibility",
+      });
+      ScrollTrigger.refresh();
     });
 
     return () => mm.revert();

@@ -8,9 +8,8 @@ import styles from "./Navbar.module.css";
 
 const menuLinks = [
   { href: "/", label: "Accueil" },
-  { href: "/annonces", label: "Annonces" },
+  { href: "/annonces", label: "Biens" },
   { href: "/vendeur", label: "Publier un bien" },
-  { href: "/admin", label: "Admin" },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
   { href: "/connexion", label: "Connexion", mobileOnly: true },

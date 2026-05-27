@@ -4,11 +4,13 @@ import { use, useState } from "react";
 import type { MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { mockAds } from "@/lib/data";
 import styles from "./detail.module.css";
 
 export default function AdDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  const searchParams = useSearchParams();
   const ad = mockAds.find((item) => item.id === id);
   const [activeImg, setActiveImg] = useState(0);
   const [zoom, setZoom] = useState({
@@ -37,6 +39,8 @@ export default function AdDetailPage({ params }: { params: Promise<{ id: string 
     "Équipements Pro": [ad.image, "/equipements-pro.png", "/equipement-pro.png"],
   };
   const gallery = (categoryImages[ad.category] ?? [ad.image, ad.image, ad.image]).slice(0, 3);
+  const backHref = searchParams.get("from") === "admin-annonces" ? "/admin/annonces" : "/annonces";
+  const backLabel = searchParams.get("from") === "admin-annonces" ? "Retour admin annonces" : "Retour aux annonces";
 
   const handleZoomMove = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -58,16 +62,16 @@ export default function AdDetailPage({ params }: { params: Promise<{ id: string 
 
   return (
     <main className={styles.page}>
-      <Link href="/annonces" className={styles.backLink} aria-label="Retour aux annonces">
+      <Link href={backHref} className={styles.backLink} aria-label={backLabel}>
         <span aria-hidden>←</span>
-        Retour aux annonces
+        {backLabel}
       </Link>
 
       {/* Breadcrumb */}
       <nav className={styles.breadcrumb}>
         <Link href="/">Accueil</Link>
         <span>/</span>
-        <Link href="/annonces">Annonces</Link>
+        <Link href={backHref}>{searchParams.get("from") === "admin-annonces" ? "Admin annonces" : "Annonces"}</Link>
         <span>/</span>
         <span>{ad.category}</span>
         <span>/</span>
@@ -263,18 +267,16 @@ export default function AdDetailPage({ params }: { params: Promise<{ id: string 
                 key={a.id}
                 className={`${styles.card} ${index % 2 === 0 ? styles.darkCard : styles.lightCard}`}
               >
-                <div className={styles.cardTop}>
-                  <span>{a.category}</span>
-                  <span>{a.loaPossible ? "LOA dispo" : "Location"}</span>
-                  <i aria-hidden />
-                </div>
-                <h2>{a.title}</h2>
-                <p className={styles.cardSeller}>{a.owner}</p>
-                <p className={styles.cardMeta}>{a.location}</p>
-                <strong className={styles.cardPrice}>{a.price.toLocaleString("fr-FR")} FCFA / mois</strong>
                 <div className={styles.cardImageWrap}>
                   <Image src={a.image} alt={a.title} fill sizes="(max-width: 900px) 90vw, 25vw" />
-                  <span className={styles.cardReadMore}>Voir l&apos;annonce</span>
+                </div>
+                <div className={styles.cardBody}>
+                  <div className={styles.cardTop}>
+                    <span>{a.category}</span>
+                    <span>{a.loaPossible ? "LOA dispo" : "Location"}</span>
+                  </div>
+                  <h2>{a.title}</h2>
+                  <strong className={styles.cardPrice}>{a.price.toLocaleString("fr-FR")} FCFA / mois</strong>
                 </div>
               </Link>
             ))}

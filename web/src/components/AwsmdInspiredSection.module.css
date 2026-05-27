@@ -278,10 +278,32 @@
   .panel {
     border-radius: 0;
     min-height: auto;
+    padding: 12vw 5vw;
   }
 
   .headingRow {
+    display: grid;
     align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.65rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .title {
+    max-width: 100%;
+    font-size: clamp(2rem, 10vw, 3.05rem);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .movingTitleLine {
+    overflow: visible;
+    padding-bottom: 0;
   }
 
   .arrows {
@@ -296,5 +318,32 @@
   .card {
     flex-basis: min(78vw, 330px);
     min-width: min(78vw, 330px);
+    min-height: 430px;
+    padding: 1rem;
+  }
+
+  .cardTop {
+    grid-template-columns: max-content max-content 1fr;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .cardTop span {
+    max-width: 100%;
+    padding: 0.42rem 0.52rem;
+    font-size: 0.58rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .card h3 {
+    font-size: clamp(1.55rem, 9vw, 2.2rem);
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+
+  .seller,
+  .meta {
+    font-size: 0.74rem;
   }
 }

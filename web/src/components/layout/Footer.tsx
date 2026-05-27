@@ -55,13 +55,13 @@ export default function Footer() {
           </div>
 
           {/* Right: CTA Box */}
-          <div className={styles.ctaBox}>
+          <Link href="/annonces" className={styles.ctaBox}>
             <h3 className={styles.ctaTitle}>Entrer</h3>
             <div className={styles.ctaButton}>
               <span className={styles.ctaButtonText}>Démarrer</span>
               <span>→</span>
             </div>
-          </div>
+          </Link>
 
         </div>
 
@@ -72,13 +72,13 @@ export default function Footer() {
           <div className={styles.links}>
             <h4 className={styles.linksTitle}>Liens utiles</h4>
             <Link href="/" className={styles.linkItem}>Accueil</Link>
-            <Link href="/annonces" className={styles.linkItem}>Trouver un bien</Link>
-            <Link href="/admin" className={styles.linkItem}>Publier un bien</Link>
-            <Link href="/annonces" className={styles.linkItem}>Catégories</Link>
-            <Link href="/admin" className={styles.linkItem}>Espace propriétaire</Link>
-            <Link href="#" className={styles.linkItem}>Aide & contact</Link>
-            <Link href="#" className={styles.linkItem}>CGU</Link>
-            <Link href="#" className={styles.linkItem}>Confidentialité</Link>
+            <Link href="/annonces" className={styles.linkItem}>Biens disponibles</Link>
+            <Link href="/annonces?category=Je recherche" className={styles.linkItem}>Je recherche</Link>
+            <Link href="/vendeur/publier" className={styles.linkItem}>Publier un bien</Link>
+            <Link href="/vendeur" className={styles.linkItem}>Espace vendeur</Link>
+            <Link href="/contact" className={styles.linkItem}>Contact</Link>
+            <Link href="/faq" className={styles.linkItem}>FAQ</Link>
+            <Link href="/connexion" className={styles.linkItem}>Connexion</Link>
           </div>
 
           {/* Right Address */}
@@ -122,8 +122,8 @@ export default function Footer() {
           Cotonou, BJ
         </div>
         <div className={styles.bottomBarLinks}>
-          <Link href="#" className={styles.bottomBarLink}>Instagram</Link>
-          <Link href="#" className={styles.bottomBarLink}>LinkedIn</Link>
+          <Link href="/contact" className={styles.bottomBarLink}>Support</Link>
+          <Link href="/faq" className={styles.bottomBarLink}>Aide</Link>
         </div>
       </div>
 

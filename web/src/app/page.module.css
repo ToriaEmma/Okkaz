@@ -2994,6 +2994,8 @@
   text-transform: uppercase;
   letter-spacing: 0.18em;
   margin: 0;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .gallerySection {
@@ -3101,7 +3103,8 @@
   }
   
   .sectionSubtitle {
-    font-size: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
   }
   
   .galleryGrid {

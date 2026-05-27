@@ -544,15 +544,15 @@
 
 .relatedGrid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(0.9rem, 1.8vw, 1.4rem);
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+  max-width: 1320px;
+  margin: 0 auto;
 }
 
 .card {
   width: 100%;
-  min-height: 320px;
   border-radius: 22px;
-  padding: clamp(0.85rem, 1.35vw, 1.05rem);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -578,94 +578,71 @@
   box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.08);
 }
 
-.cardTop {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.85rem;
-}
-
-.cardTop span {
-  padding: 0.38rem 0.5rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.64);
-  color: #0a0d0f;
-  font-size: 0.56rem;
-  font-weight: 820;
-}
-
-.lightCard .cardTop span {
-  background: var(--accent);
-  color: #ffffff;
-}
-
-.cardTop i {
-  justify-self: end;
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  box-shadow: inset 0 0 0 2px currentColor;
-  opacity: 0.16;
-}
-
-.card h2 {
-  margin: 0;
-  color: inherit;
-  font-size: clamp(1.35rem, 2vw, 1.9rem);
-  font-weight: 760;
-  letter-spacing: -0.06em;
-  line-height: 0.94;
-}
-
-.cardSeller,
-.cardMeta {
-  margin: 0.7rem 0 0;
-  color: currentColor;
-  font-size: 0.78rem;
-  font-weight: 640;
-  line-height: 1.35;
-  opacity: 0.7;
-}
-
-.cardMeta {
-  margin-top: 0.2rem;
-}
-
-.cardPrice {
-  display: block;
-  margin: 0.75rem 0 0.9rem;
-  color: inherit;
-  font-size: 0.95rem;
-  font-weight: 860;
-  letter-spacing: -0.03em;
-}
-
 .cardImageWrap {
   position: relative;
-  min-height: 150px;
-  flex: 1;
-  margin: auto calc(clamp(0.85rem, 1.35vw, 1.05rem) * -1) calc(clamp(0.85rem, 1.35vw, 1.05rem) * -1);
-  border-radius: 16px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   transform: translateZ(0);
+  background: #f3f4f6;
 }
 
 .cardImageWrap :global(img) {
   object-fit: cover;
 }
 
-.cardReadMore {
-  position: absolute;
-  left: 0.85rem;
-  bottom: 0.85rem;
-  padding: 0.62rem 0.72rem;
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: clamp(0.7rem, 1vw, 0.85rem);
+}
+
+.cardTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cardTop span {
+  padding: 0.24rem 0.48rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(14px);
-  color: #0a0d0f;
-  font-size: 0.66rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+  font-size: 0.5rem;
   font-weight: 820;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.lightCard .cardTop span {
+  background: rgba(17, 17, 17, 0.06);
+  color: #0a0d0f;
+}
+
+.cardTop span:nth-child(2) {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.card h2 {
+  margin: 0.1rem 0 0;
+  color: inherit;
+  font-size: clamp(0.8rem, 1.1vw, 1.05rem);
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.cardPrice {
+  display: block;
+  margin: 0.15rem 0 0;
+  color: inherit;
+  font-size: 0.75rem;
+  font-weight: 860;
+  letter-spacing: -0.025em;
+  opacity: 0.95;
 }
 
 /* ─── REVIEW FORM ─── */

@@ -1,16 +1,17 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useHeroUnfold } from "@/hooks/useHeroUnfold";
-import { mockAds } from "@/lib/data";
-import MissionText from "@/components/MissionText";
+import { mockAds, type SearchRequest } from "@/lib/data";
+import { readSearchRequests } from "@/lib/searchRequests";
 import styles from "./annonces.module.css";
 
 const MODES = ["Tous", "LOA", "Location"] as const;
-const HERO_LETTERS = ["B", "i", "e", "n", "s"];
+const CATEGORY_ORDER = ["Toutes", "Véhicules", "Immobilier", "Électronique", "Équipements Pro", "Je recherche", "Événementiel", "Mobilier"];
+const HERO_LETTERS = ["b", "i", "e", "n", "s"];
 
 function AnnoncesContent() {
   const searchParams = useSearchParams();
@@ -18,8 +19,25 @@ function AnnoncesContent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState(searchParams.get("category") ?? "Toutes");
   const [mode, setMode] = useState<(typeof MODES)[number]>("Tous");
+  const [searchRequests, setSearchRequests] = useState<SearchRequest[]>([]);
 
-  const categories = useMemo(() => ["Toutes", ...new Set(mockAds.map((ad) => ad.category))], []);
+  const categories = useMemo(() => {
+    const existing = new Set(mockAds.map((ad) => ad.category));
+    return CATEGORY_ORDER.filter((item) => item === "Toutes" || item === "Je recherche" || existing.has(item));
+  }, []);
+
+  useEffect(() => {
+    const syncRequests = () => setSearchRequests(readSearchRequests());
+
+    syncRequests();
+    window.addEventListener("okkaz-search-requests-updated", syncRequests);
+    window.addEventListener("storage", syncRequests);
+
+    return () => {
+      window.removeEventListener("okkaz-search-requests-updated", syncRequests);
+      window.removeEventListener("storage", syncRequests);
+    };
+  }, []);
 
   const filteredAds = mockAds.filter((ad) => {
     const query = searchTerm.trim().toLowerCase();
@@ -33,6 +51,18 @@ function AnnoncesContent() {
 
     return matchesSearch && matchesCategory && matchesMode;
   });
+  const filteredRequests = searchRequests.filter((request) => {
+    const query = searchTerm.trim().toLowerCase();
+    const matchesSearch =
+      query.length === 0 ||
+      request.title.toLowerCase().includes(query) ||
+      request.location.toLowerCase().includes(query) ||
+      request.requester.toLowerCase().includes(query);
+    const matchesCategory = category === "Je recherche" || request.category === category;
+
+    return matchesSearch && matchesCategory && mode === "Tous";
+  });
+  const visibleRequests = category === "Je recherche" ? filteredRequests : [];
   const heroCenter = (HERO_LETTERS.length - 1) / 2;
 
   return (
@@ -49,7 +79,7 @@ function AnnoncesContent() {
                   className={styles.heroLetterWrapper}
                   style={{
                     transform: `translate3d(${
-                      unfoldProgress * -0.72 + distanceFromCenter * unfoldProgress * 0.045
+                      unfoldProgress * -0.92 + distanceFromCenter * unfoldProgress * 0.06
                     }em, 0, 0)`,
                   }}
                 >
@@ -67,17 +97,7 @@ function AnnoncesContent() {
 
         <div className={styles.heroOverlayContent}>
           <div className={styles.scrollIndicator}>Scroll</div>
-          <div className={styles.heroBottomText}>
-            <h2>
-              Trouvez le bien idéal.
-            </h2>
-          </div>
         </div>
-      </section>
-
-      <section className={styles.missionSection}>
-        <h3 className={styles.sectionSubtitle}>Location. Troc. LOA.</h3>
-        <MissionText />
       </section>
 
       <section className={styles.listingShell}>
@@ -120,29 +140,46 @@ function AnnoncesContent() {
         </div>
 
         <div className={styles.resultsHeader}>
-          <span>{filteredAds.length} résultat{filteredAds.length > 1 ? "s" : ""}</span>
+          <span>{filteredAds.length + visibleRequests.length} résultat{filteredAds.length + visibleRequests.length > 1 ? "s" : ""}</span>
           <span>Bénin</span>
         </div>
 
         <div className={styles.grid}>
+          {visibleRequests.map((request) => (
+            <article key={request.id} className={`${styles.card} ${styles.requestCard}`}>
+              <div className={styles.requestCardBody}>
+                <div className={styles.cardTop}>
+                  <span>Je recherche</span>
+                  <span>{request.urgency}</span>
+                </div>
+                <h2>{request.title}</h2>
+                <p>{request.description}</p>
+                <strong className={styles.price}>Budget {request.budget.toLocaleString("fr-FR")} FCFA</strong>
+                <span className={styles.requestMeta}>{request.category} · {request.location}</span>
+                <span className={styles.requestMeta}>{request.requester} · {request.createdAt}</span>
+                <Link href={`/vendeur?recherche=${request.id}`} className={styles.requestCta}>
+                  Je peux répondre
+                </Link>
+              </div>
+            </article>
+          ))}
+
           {filteredAds.map((ad, index) => (
             <Link
               key={ad.id}
               href={`/annonces/${ad.id}`}
               className={`${styles.card} ${index % 2 === 0 ? styles.darkCard : styles.lightCard}`}
             >
-              <div className={styles.cardTop}>
-                <span>{ad.category}</span>
-                <span>{ad.loaPossible ? "LOA dispo" : "Location"}</span>
-                <i aria-hidden />
-              </div>
-              <h2>{ad.title}</h2>
-              <p className={styles.seller}>{ad.owner}</p>
-              <p className={styles.meta}>{ad.location}</p>
-              <strong className={styles.price}>{ad.price.toLocaleString("fr-FR")} FCFA / mois</strong>
               <div className={styles.imageWrap}>
                 <Image src={ad.image} alt={ad.title} fill sizes="(max-width: 900px) 90vw, 25vw" />
-                <span className={styles.readMore}>Voir l&apos;annonce</span>
+              </div>
+              <div className={styles.cardBody}>
+                <div className={styles.cardTop}>
+                  <span>{ad.category}</span>
+                  <span>{ad.loaPossible ? "LOA dispo" : "Location"}</span>
+                </div>
+                <h2>{ad.title}</h2>
+                <strong className={styles.price}>{ad.price.toLocaleString("fr-FR")} FCFA / mois</strong>
               </div>
             </Link>
           ))}

@@ -32,6 +32,19 @@ export interface Ad {
   usageRules: string[];
 }
 
+export interface SearchRequest {
+  id: string;
+  reference: string;
+  title: string;
+  category: string;
+  budget: number;
+  location: string;
+  requester: string;
+  urgency: "Standard" | "Express";
+  description: string;
+  createdAt: string;
+}
+
 export const mockAds: Ad[] = [
   {
     id: "1",
@@ -162,5 +175,44 @@ export const mockAds: Ad[] = [
     requirements: ["Pièce d'identité", "Adresse du chantier", "Caution matériel"],
     security: ["État des lieux", "Contrat de location", "Support propriétaire"],
     usageRules: ["Installation sur surface stable", "Carburant à la charge du locataire", "Retour avec niveau et accessoires conformes"],
+  },
+];
+
+export const mockSearchRequests: SearchRequest[] = [
+  {
+    id: "REQ-001",
+    reference: "OKK-REQ-001",
+    title: "Je recherche une voiture 4x4 pour chantier",
+    category: "Véhicules",
+    budget: 180000,
+    location: "Cotonou / Abomey-Calavi",
+    requester: "Entreprise BTP",
+    urgency: "Express",
+    description: "Besoin d'un 4x4 robuste avec chauffeur possible pour 10 jours de suivi chantier.",
+    createdAt: "Il y a 35 min",
+  },
+  {
+    id: "REQ-002",
+    reference: "OKK-REQ-002",
+    title: "Je recherche un groupe electrogene 30-50kVA",
+    category: "Équipements Pro",
+    budget: 90000,
+    location: "Porto-Novo",
+    requester: "Evenementiel Porto",
+    urgency: "Standard",
+    description: "Location weekend avec livraison et installation souhaitees.",
+    createdAt: "Il y a 2 h",
+  },
+  {
+    id: "REQ-003",
+    reference: "OKK-REQ-003",
+    title: "Je recherche un studio meuble",
+    category: "Immobilier",
+    budget: 250000,
+    location: "Akpakpa",
+    requester: "Client verifie",
+    urgency: "Standard",
+    description: "Studio meuble pour 2 mois minimum, proche voie principale.",
+    createdAt: "Aujourd'hui",
   },
 ];

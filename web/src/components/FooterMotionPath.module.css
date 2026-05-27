@@ -45,8 +45,8 @@
 
 .movingTitleLine {
   display: block;
-  overflow: hidden;
-  padding-bottom: 0.08em;
+  overflow: visible;
+  padding-bottom: 0.16em;
 }
 
 .movingTitleText {
@@ -99,6 +99,17 @@
   .title {
     margin-top: 1rem;
     text-align: left;
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .movingTitleLine {
+    overflow: visible;
+    padding-bottom: 0.22em;
+  }
+
+  .movingTitleText {
+    transform: none !important;
   }
 
   .motionPath {

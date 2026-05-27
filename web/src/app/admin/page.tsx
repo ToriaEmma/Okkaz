@@ -1,180 +1,304 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { readPlatformEvents, type PlatformEvent } from "@/lib/platformEvents";
 import AdminShell from "./AdminShell";
 import styles from "./admin.module.css";
 
-const stats = [
-  { label: "Annonces a valider", value: "8", meta: "File sous 72h", icon: "A", href: "/admin/annonces" },
-  { label: "KYC en attente", value: "12", meta: "Pieces a verifier", icon: "K", href: "/admin/kyc" },
-  { label: "Mises en contact", value: "1 248", meta: "Ce mois", icon: "P", href: "/admin/paiements" },
-  { label: "Revenu collecte", value: "1.87M", meta: "FCFA - 30 j", icon: "$", href: "/admin/paiements" },
+type Tab = "overview" | "settings";
+
+type Pending = {
+  id: string;
+  title: string;
+  meta: string;
+};
+
+const INITIAL_ADS: Pending[] = [
+  { id: "AN-2401", title: "Toyota Hilux 2018 - Cotonou", meta: "Vehicules · Soumis il y a 14h" },
+  { id: "AN-2400", title: "Studio meuble Akpakpa", meta: "Immobilier · Soumis il y a 22h" },
+  { id: "AN-2398", title: "MacBook Pro M2 16''", meta: "Electronique · Soumis il y a 2j (urgent)" },
 ];
 
-const todo = [
-  { time: "Urgent", title: "8 annonces a valider", type: "Delai 72h depasse pour 2", href: "/admin/annonces" },
-  { time: "Aujourd'hui", title: "12 dossiers KYC", type: "Pieces d'identite", href: "/admin/kyc" },
-  { time: "Aujourd'hui", title: "3 signalements", type: "Suspendre ou avertir", href: "/admin/utilisateurs" },
-  { time: "Demain", title: "Rapprochement Mobile Money", type: "MTN + Moov + Celtiis", href: "/admin/paiements" },
+const INITIAL_KYC: Pending[] = [
+  { id: "KYC-487", title: "Emma TODEDJI", meta: "CNI · Particulier · Soumis il y a 6h" },
+  { id: "KYC-486", title: "Immo Benin SARL", meta: "RCCM · Pro · Soumis il y a 1j" },
 ];
 
-const topCategories = [
-  { name: "Immobilier", contacts: 312, share: 88 },
-  { name: "Vehicules", contacts: 264, share: 74 },
-  { name: "Electronique", contacts: 198, share: 56 },
-  { name: "Equipements Pro", contacts: 154, share: 44 },
-  { name: "Evenementiel", contacts: 124, share: 35 },
-  { name: "Mobilier", contacts: 96, share: 27 },
-];
-
-const dailyContacts = [42, 64, 38, 82, 58, 71, 95];
-
-const notifications = [
-  { level: "alerte", title: "2 annonces depassent 72h", text: "Validation requise immediatement.", href: "/admin/annonces" },
-  { level: "info", title: "Nouveau retrait Pro", text: "Immo Benin a souscrit Premium mensuel.", href: "/admin/abonnements" },
-  { level: "warning", title: "3 signalements actifs", text: "Comportements suspects a moderer.", href: "/admin/utilisateurs" },
-  { level: "info", title: "Nouvel abonnement Premium", text: "Auto Plus Cotonou - Hebdo souscrit.", href: "/admin/abonnements" },
-];
-
-const auditLog = [
-  { actor: "Admin", action: "Annonce validee", target: "Mercedes-Benz Classe G", time: "Il y a 12 min" },
-  { actor: "Admin", action: "KYC approuve", target: "Emma TODEDJI", time: "Il y a 38 min" },
-  { actor: "Admin", action: "Utilisateur suspendu", target: "compte #4218", time: "Il y a 1 h" },
-  { actor: "Admin", action: "Prix modifie", target: "1 500 -> 1 500 FCFA mise en contact", time: "Hier" },
+const INITIAL_CATEGORIES = [
+  "Vehicules",
+  "Immobilier",
+  "Electronique",
+  "Equipements Pro",
+  "Evenementiel",
+  "Mobilier",
 ];
 
 export default function AdminDashboard() {
+  const [tab, setTab] = useState<Tab>("overview");
+  const [categories, setCategories] = useState<string[]>(INITIAL_CATEGORIES);
+  const [newCategory, setNewCategory] = useState("");
+  const [contactPrice, setContactPrice] = useState("1500");
+  const [accessDuration, setAccessDuration] = useState("7");
+  const [adminName, setAdminName] = useState("Admin OKKAZ");
+  const [adminEmail, setAdminEmail] = useState("admin@okkaz.bj");
+  const [events, setEvents] = useState<PlatformEvent[]>([]);
+
+  useEffect(() => {
+    const syncEvents = () => setEvents(readPlatformEvents());
+
+    syncEvents();
+    window.addEventListener("okkaz-events-updated", syncEvents);
+    window.addEventListener("storage", syncEvents);
+
+    return () => {
+      window.removeEventListener("okkaz-events-updated", syncEvents);
+      window.removeEventListener("storage", syncEvents);
+    };
+  }, []);
+
+  const addCategory = () => {
+    const trimmed = newCategory.trim();
+    if (!trimmed || categories.includes(trimmed)) return;
+    setCategories((prev) => [...prev, trimmed]);
+    setNewCategory("");
+  };
+
+  const removeCategory = (cat: string) => {
+    if (confirm(`Supprimer la categorie "${cat}" ?`)) {
+      setCategories((prev) => prev.filter((c) => c !== cat));
+    }
+  };
+
   return (
     <AdminShell active="/admin">
       <section className={styles.content}>
         <header className={styles.header}>
           <div>
-            <h1>Centre operations OKKAZ</h1>
-            <p>Validez les annonces, controlez les paiements et suivez l&apos;activite de la plateforme.</p>
+            <h1>Dashboard admin</h1>
+            <p>Vue operationnelle OKKAZ : annonces, identites, paiements, abonnements et demandes clients.</p>
           </div>
+
           <label className={styles.search}>
-            <span>Search</span>
-            <input type="search" placeholder="Annonce, utilisateur, reference paiement" />
+            <span>Recherche</span>
+            <input type="search" placeholder="Annonce, utilisateur, reference..." />
           </label>
-          <div className={styles.avatar}>OK</div>
+
+          <Link href="/admin/profil" className={styles.avatar} aria-label="Profil admin">
+            OK
+          </Link>
         </header>
 
-        <section className={styles.stats} aria-label="Indicateurs MVP">
-          {stats.map((item) => (
-            <Link href={item.href} className={styles.statCard} key={item.label}>
-              <span className={styles.icon}>{item.icon}</span>
-              <div>
-                <h2>{item.label}</h2>
-                <p>{item.meta}</p>
-              </div>
-              <strong>{item.value}</strong>
-            </Link>
-          ))}
-        </section>
+        <div className={styles.tabSwitcher} role="tablist" aria-label="Sections dashboard">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === "overview"}
+            className={`${styles.tabSwitcherBtn} ${tab === "overview" ? styles.tabSwitcherActive : ""}`}
+            onClick={() => setTab("overview")}
+          >
+            Vue d&apos;ensemble
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === "settings"}
+            className={`${styles.tabSwitcherBtn} ${tab === "settings" ? styles.tabSwitcherActive : ""}`}
+            onClick={() => setTab("settings")}
+          >
+            Parametres
+          </button>
+        </div>
 
-        <section className={styles.grid}>
-          <article className={styles.card}>
-            <div className={styles.cardHeader}>
+        {tab === "overview" ? (
+          <>
+            <section className={styles.adminHero}>
               <div>
-                <h2>Mises en contact / jour</h2>
-                <p><span>+18%</span> vs semaine derniere - indicateur cle de revenu</p>
+                <span className={styles.adminHeroKicker}>Pilotage temps reel</span>
+                <h2>Operations OKKAZ sous controle</h2>
+                <p>
+                  Les files critiques sont regroupees au meme endroit pour traiter plus vite les annonces,
+                  les identites et les signalements.
+                </p>
               </div>
-              <Link href="/admin/paiements">Detail</Link>
-            </div>
-            <div className={styles.chart} aria-hidden>
-              {dailyContacts.map((height, index) => (
-                <span key={index} style={{ height: `${height}%` }} />
-              ))}
-            </div>
-            <div className={styles.chartLabels}>
-              <span>Lu</span><span>Ma</span><span>Me</span><span>Je</span><span>Ve</span><span>Sa</span><span>Di</span>
-            </div>
-          </article>
+              <div className={styles.adminHeroMetrics} aria-label="Resume operationnel">
+                <span>
+                  <strong>{INITIAL_ADS.length + INITIAL_KYC.length + events.filter((event) => event.status === "pending").length}</strong>
+                  actions ouvertes
+                </span>
+                <span>
+                  <strong>{events.filter((event) => event.status === "pending").length}</strong>
+                  paiements a accorder
+                </span>
+                <span>
+                  <strong>98%</strong>
+                  paiements OK
+                </span>
+              </div>
+            </section>
 
-          <article className={styles.card}>
-            <div className={styles.cardHeader}>
-              <div>
-                <h2>A faire maintenant</h2>
-                <p>File operationnelle priorisee</p>
-              </div>
+            <div className={styles.stats}>
+              <Link href="/admin/annonces" className={styles.statCard}>
+                <span className={styles.icon}>A</span>
+                <h2>Annonces</h2>
+                <p>A valider sous 72h</p>
+                <strong>{INITIAL_ADS.length}</strong>
+              </Link>
+              <Link href="/admin/kyc" className={styles.statCard}>
+                <span className={styles.icon}>K</span>
+                <h2>Identités</h2>
+                <p>Comptes à vérifier</p>
+                <strong>{INITIAL_KYC.length}</strong>
+              </Link>
+              <Link href="/admin/paiements" className={styles.statCard}>
+                <span className={styles.icon}>F</span>
+                <h2>Revenu</h2>
+                <p>Collecte ce mois</p>
+                <strong>{events.reduce((sum, event) => sum + (event.amount ?? 0), 0).toLocaleString("fr-FR")}</strong>
+              </Link>
+              <Link href="/admin/utilisateurs" className={styles.statCard}>
+                <span className={styles.icon}>U</span>
+                <h2>Utilisateurs</h2>
+                <p>Actifs cette semaine</p>
+                <strong>184</strong>
+              </Link>
             </div>
-            <div className={styles.scheduleList}>
-              {todo.map((item) => (
-                <Link className={styles.scheduleItem} href={item.href} key={`${item.time}-${item.title}`}>
-                  <span>{item.time}</span>
+
+            <div className={styles.adminDashboardFocus}>
+              <section className={styles.card}>
+                <header className={styles.cardHeader}>
                   <div>
-                    <strong>{item.title}</strong>
-                    <p>{item.type}</p>
+                    <h2>Revenus plateforme</h2>
+                    <p>
+                      Tendance des encaissements OKKAZ, <span>7 derniers jours</span>
+                    </p>
                   </div>
-                  <em>Ouvrir</em>
-                </Link>
-              ))}
-            </div>
-          </article>
-
-          <aside className={styles.sideRail}>
-            <article className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div>
-                  <h2>Top categories</h2>
-                  <p>Par mises en contact ce mois</p>
+                  <Link href="/admin/paiements">Details</Link>
+                </header>
+                <div className={styles.chart} aria-label="Graphique revenus hebdomadaires">
+                  <span style={{ height: "46%" }} />
+                  <span style={{ height: "62%" }} />
+                  <span style={{ height: "54%" }} />
+                  <span style={{ height: "78%" }} />
+                  <span style={{ height: "68%" }} />
+                  <span style={{ height: "84%" }} />
+                  <span style={{ height: "92%" }} />
                 </div>
-                <Link href="/admin/categories">Gerer</Link>
-              </div>
-              <div className={styles.categoryList}>
-                {topCategories.map((cat) => (
-                  <div className={styles.categoryRow} key={cat.name}>
-                    <div className={styles.categoryRowHead}>
-                      <strong>{cat.name}</strong>
-                      <em>{cat.contacts}</em>
-                    </div>
-                    <div className={styles.categoryBar}>
-                      <span style={{ width: `${cat.share}%` }} />
-                    </div>
+                <div className={styles.chartLabels}>
+                  <span>Lun</span>
+                  <span>Mar</span>
+                  <span>Mer</span>
+                  <span>Jeu</span>
+                  <span>Ven</span>
+                  <span>Sam</span>
+                  <span>Dim</span>
+                </div>
+              </section>
+
+              <section className={styles.card}>
+                <header className={styles.cardHeader}>
+                  <div>
+                    <h2>Alertes</h2>
+                    <p>Points qui demandent une decision rapide.</p>
                   </div>
+                </header>
+                <div className={styles.notifList}>
+                  {events.slice(0, 4).map((event) => (
+                    <Link
+                      href={event.type === "subscription_payment" ? "/admin/abonnements" : "/admin/paiements"}
+                      key={event.id}
+                      className={`${styles.notifItem} ${event.status === "pending" ? styles.notif_warning : styles.notif_info}`}
+                    >
+                      <span className={styles.notifDot} />
+                      <span>
+                        <strong>{event.title}</strong>
+                        <p>{event.detail}</p>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.settingsGrid}>
+              <article className={styles.adminSettingCard}>
+                <h2 className={styles.spaceSectionTitle}>Tarification mise en contact</h2>
+                <p className={styles.adminSettingLead}>
+                  Montant paye par le client pour debloquer un numero vendeur. Cet argent est encaisse par OKKAZ.
+                </p>
+                <div className={styles.adminSettingRow}>
+                  <label className={styles.adminSettingField}>
+                    <span>Prix (FCFA)</span>
+                    <input type="number" value={contactPrice} onChange={(e) => setContactPrice(e.target.value)} />
+                  </label>
+                  <label className={styles.adminSettingField}>
+                    <span>Duree d&apos;acces au numero (jours)</span>
+                    <input type="number" value={accessDuration} onChange={(e) => setAccessDuration(e.target.value)} />
+                  </label>
+                </div>
+              </article>
+
+              <article className={styles.adminSettingCard}>
+                <h2 className={styles.spaceSectionTitle}>Compte administrateur</h2>
+                <div className={styles.adminSettingRow}>
+                  <label className={styles.adminSettingField}>
+                    <span>Nom complet</span>
+                    <input type="text" value={adminName} onChange={(e) => setAdminName(e.target.value)} />
+                  </label>
+                  <label className={styles.adminSettingField}>
+                    <span>Email</span>
+                    <input type="email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} />
+                  </label>
+                </div>
+                <label className={styles.adminSettingField}>
+                  <span>Mot de passe</span>
+                  <input type="password" defaultValue="********" />
+                </label>
+              </article>
+            </div>
+
+            <article className={styles.adminSettingCard}>
+              <h2 className={styles.spaceSectionTitle}>Categories d&apos;annonces</h2>
+              <p className={styles.adminSettingLead}>Categories visibles dans le formulaire de publication et les filtres.</p>
+              <ul className={styles.adminCategoryList}>
+                {categories.map((cat) => (
+                  <li key={cat} className={styles.adminCategoryChip}>
+                    {cat}
+                    <button type="button" onClick={() => removeCategory(cat)} aria-label={`Supprimer ${cat}`}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </button>
+                  </li>
                 ))}
+              </ul>
+              <div className={styles.adminCategoryAdd}>
+                <input
+                  type="text"
+                  value={newCategory}
+                  onChange={(e) => setNewCategory(e.target.value)}
+                  placeholder="Ajouter une categorie..."
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addCategory();
+                    }
+                  }}
+                />
+                <button type="button" onClick={addCategory}>
+                  Ajouter
+                </button>
               </div>
             </article>
 
-            <article className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div>
-                  <h2>Notifications</h2>
-                  <p>Alertes operationnelles</p>
-                </div>
-              </div>
-              <div className={styles.notifList}>
-                {notifications.map((notif) => (
-                  <Link href={notif.href} key={notif.title} className={`${styles.notifItem} ${styles[`notif_${notif.level}`]}`}>
-                    <span className={styles.notifDot} aria-hidden />
-                    <div>
-                      <strong>{notif.title}</strong>
-                      <p>{notif.text}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </article>
-          </aside>
-        </section>
-
-        <article className={styles.card}>
-          <div className={styles.cardHeader}>
-            <div>
-              <h2>Activite recente (audit)</h2>
-              <p>Tracabilite des actions effectuees par l&apos;equipe admin.</p>
-            </div>
-            <button type="button">Tout l&apos;historique</button>
-          </div>
-          <div className={styles.auditList}>
-            {auditLog.map((log, i) => (
-              <div key={i} className={styles.auditRow}>
-                <span className={styles.auditActor}>{log.actor}</span>
-                <span className={styles.auditAction}>{log.action}</span>
-                <span className={styles.auditTarget}>{log.target}</span>
-                <span className={styles.auditTime}>{log.time}</span>
-              </div>
-            ))}
-          </div>
-        </article>
+            <button type="button" className={styles.adminSettingSave}>
+              Enregistrer les modifications
+            </button>
+          </>
+        )}
       </section>
     </AdminShell>
   );
