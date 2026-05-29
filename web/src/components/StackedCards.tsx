@@ -139,7 +139,7 @@ export default function StackedCards() {
                 delay: 0.05,
                 ease: "power1.inOut"
               }
-            : false,
+            : undefined,
         }
       });
 
