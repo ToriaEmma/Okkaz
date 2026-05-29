@@ -39,11 +39,18 @@
 .heroLetterWrapper {
   display: inline-block;
   position: relative;
+  z-index: 1;
   transform-origin: center bottom;
   will-change: transform;
 }
 
+.heroKImageHost {
+  z-index: 3;
+}
+
 .heroAnimatedLetter {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   opacity: 0;
   animation: heroFadeIn 0.5s ease forwards;
@@ -51,11 +58,11 @@
 
 .heroKImage {
   position: absolute;
-  left: 50%;
+  left: 92%;
   bottom: -2%;
-  width: 1.22em;
+  width: 1.86em;
   height: 0.56em;
-  transform: translateX(-44%);
+  transform: translateX(-50%);
   background-image: url('/img.PNG');
   background-size: contain;
   background-repeat: no-repeat;
@@ -167,7 +174,7 @@
   }
 
   .heroKImage {
-    width: 1.08em;
+    width: 1.68em;
     height: 0.52em;
     bottom: -8%;
   }
@@ -193,7 +200,7 @@
     max-width: 13rem;
     font-size: clamp(1.45rem, 7vw, 2rem);
     line-height: 0.98;
-    transform: translateX(4rem);
+    transform: translate(4rem, 0.45rem);
   }
 
   .scrollIndicator {

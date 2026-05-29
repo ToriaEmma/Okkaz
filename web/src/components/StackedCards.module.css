@@ -266,26 +266,29 @@
   }
 
   .container {
-    display: block;
+    display: flex;
+    justify-content: center;
   }
 
   .cardsWrapper {
     width: 100%;
-    height: auto;
-    display: grid;
-    gap: 0.9rem;
-    align-items: stretch;
-    justify-content: stretch;
+    height: 78svh;
+    min-height: 500px;
+    max-height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .card {
-    position: relative;
+    position: absolute;
     width: 100%;
-    height: auto;
+    height: 72svh;
     min-height: 430px;
+    max-height: 560px;
     padding: 1.15rem;
     border-radius: 24px;
-    transform: none;
+    transform-origin: top center;
   }
 
   .card::before {

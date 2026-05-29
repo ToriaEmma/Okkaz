@@ -18,7 +18,7 @@ export default function HeroSection() {
             return (
               <span
                 key={index}
-                className={styles.heroLetterWrapper}
+                className={`${styles.heroLetterWrapper} ${index === 1 ? styles.heroKImageHost : ""}`}
                 style={{
                   transform: `translate3d(${
                     unfoldProgress * -0.92 + distanceFromCenter * unfoldProgress * 0.06

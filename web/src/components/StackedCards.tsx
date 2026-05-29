@@ -88,10 +88,27 @@ export default function StackedCards() {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 769px)", () => {
-      // Initial state: first card is visible, others are moved down by 150vh
+    const setupStackedCards = ({
+      incomingOffset,
+      stackLift,
+      scaleStep,
+      scrollLength,
+      scrub,
+      snap,
+      start,
+    }: {
+      incomingOffset: number;
+      stackLift: number;
+      scaleStep: number;
+      scrollLength: number;
+      scrub: number;
+      snap: boolean;
+      start: string;
+    }) => {
+      // Initial state: first card is visible, the others enter from below.
       gsap.set(cardsRef.current, {
-        y: (i) => (i === 0 ? 0 : window.innerHeight * 1.5)
+        y: (i) => (i === 0 ? 0 : window.innerHeight * incomingOffset),
+        scale: 1,
       });
       gsap.set(`.${styles.cardBody}, .${styles.cardFooter}`, {
         y: 24,
@@ -109,16 +126,20 @@ export default function StackedCards() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top top",
-          end: `+=${(CARDS.length - 1) * 85}%`,
+          start,
+          end: () => `+=${window.innerHeight * (CARDS.length - 1) * scrollLength}`,
           pin: true,
-          scrub: 1.5,
-          snap: {
-            snapTo: "labels",
-            duration: { min: 0.4, max: 1.0 },
-            delay: 0.05,
-            ease: "power1.inOut"
-          }
+          scrub,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          snap: snap
+            ? {
+                snapTo: "labels",
+                duration: { min: 0.35, max: 0.9 },
+                delay: 0.05,
+                ease: "power1.inOut"
+              }
+            : false,
         }
       });
 
@@ -149,8 +170,8 @@ export default function StackedCards() {
 
         for (let j = 0; j < i; j++) {
           tl.to(cardsRef.current[j], {
-            scale: 1 - (i - j) * 0.04,
-            y: -((i - j) * 30),
+            scale: 1 - (i - j) * scaleStep,
+            y: -((i - j) * stackLift),
             duration: 1,
             ease: "none"
           }, startTime);
@@ -160,16 +181,30 @@ export default function StackedCards() {
       });
 
       tl.addLabel("end", CARDS.length - 1);
+    };
+
+    mm.add("(min-width: 769px)", () => {
+      setupStackedCards({
+        incomingOffset: 1.5,
+        stackLift: 30,
+        scaleStep: 0.04,
+        scrollLength: 0.85,
+        scrub: 1.5,
+        snap: true,
+        start: "top top",
+      });
     });
 
     mm.add("(max-width: 768px)", () => {
-      gsap.set(cardsRef.current, {
-        clearProps: "transform,opacity,visibility,scale",
+      setupStackedCards({
+        incomingOffset: 1.15,
+        stackLift: 18,
+        scaleStep: 0.035,
+        scrollLength: 0.9,
+        scrub: 1.15,
+        snap: false,
+        start: "top 12%",
       });
-      gsap.set(`.${styles.cardBody}, .${styles.cardFooter}`, {
-        clearProps: "transform,opacity,visibility",
-      });
-      ScrollTrigger.refresh();
     });
 
     return () => mm.revert();
