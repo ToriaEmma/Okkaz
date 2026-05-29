@@ -102,6 +102,9 @@ export default function Navbar() {
             </Link>
           )}
 
+          <Link href="/connexion" className={styles.loginBtn}>
+            CONNEXION
+          </Link>
           <div className={styles.menuWrap}>
             <button
               type="button"
@@ -135,9 +138,6 @@ export default function Navbar() {
               ))}
             </div>
           </div>
-          <Link href="/connexion" className={styles.loginBtn}>
-            CONNEXION
-          </Link>
         </div>
       </div>
     </nav>

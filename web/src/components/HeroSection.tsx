@@ -18,14 +18,13 @@ export default function HeroSection() {
             return (
               <span
                 key={index}
-                className={`${styles.heroLetterWrapper} ${index === 1 ? styles.heroKImageHost : ""}`}
+                className={styles.heroLetterWrapper}
                 style={{
                   transform: `translate3d(${
                     unfoldProgress * -0.92 + distanceFromCenter * unfoldProgress * 0.06
                   }em, 0, 0)`,
                 }}
               >
-                {index === 1 && <span className={styles.heroKImage} aria-hidden />}
                 <span
                   className={styles.heroAnimatedLetter}
                   style={{ animationDelay: `${index * 0.1}s` }}

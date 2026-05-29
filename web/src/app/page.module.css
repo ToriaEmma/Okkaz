@@ -44,32 +44,12 @@
   will-change: transform;
 }
 
-.heroKImageHost {
-  z-index: 3;
-}
-
 .heroAnimatedLetter {
   position: relative;
   z-index: 1;
   display: inline-block;
   opacity: 0;
   animation: heroFadeIn 0.5s ease forwards;
-}
-
-.heroKImage {
-  position: absolute;
-  left: 92%;
-  bottom: -2%;
-  width: 1.86em;
-  height: 0.56em;
-  transform: translateX(-50%);
-  background-image: url('/img.PNG');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  z-index: 2;
-  pointer-events: none;
-  filter: drop-shadow(0 0.08em 0.1em rgba(0, 0, 0, 0.22));
 }
 
 @keyframes heroFadeIn {
@@ -171,12 +151,6 @@
   .heroBackgroundText {
     font-size: clamp(7.5rem, 35vw, 10rem);
     line-height: 0.82;
-  }
-
-  .heroKImage {
-    width: 1.68em;
-    height: 0.52em;
-    bottom: -8%;
   }
 
   .heroImageWrapper {

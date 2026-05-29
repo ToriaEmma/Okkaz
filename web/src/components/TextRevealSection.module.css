@@ -86,15 +86,17 @@
 }
 
 .ctaButton {
+  min-height: 53px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
   background-color: #1a1a1a;
   color: white;
-  padding: 1rem 2rem;
+  padding: 0 1.25rem;
   border-radius: 100px;
   font-family: var(--font-interface);
-  font-size: 0.82rem;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
