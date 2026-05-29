@@ -1,7 +1,7 @@
 .hero {
   position: relative;
-  height: 76vh;
-  min-height: 560px;
+  height: 100vh;
+  min-height: 620px;
   width: 100%;
   background-color: var(--white);
   display: flex;
@@ -12,7 +12,7 @@
 
 .heroBackgroundTextContainer {
   position: absolute;
-  top: 50%;
+  top: 53%;
   left: 50%;
   transform: translate(-36%, -50%);
   width: 100%;
