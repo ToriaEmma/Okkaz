@@ -7,6 +7,11 @@
   margin: 0;
 }
 
+html {
+  width: 100%;
+  overflow-x: clip;
+}
+
 :root {
   --primary: #250C69;
   --accent: #3B82F6;
@@ -22,6 +27,9 @@
 }
 
 body {
+  width: 100%;
+  min-width: 320px;
+  overflow-x: clip;
   font-family: var(--font-interface);
   font-weight: 500;
   color: var(--foreground);
@@ -34,4 +42,18 @@ body {
 
 h1, h2, h3, h4, h5, h6, p, span, a, button, li, label, input, textarea {
   font-family: inherit;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  min-width: 0;
 }

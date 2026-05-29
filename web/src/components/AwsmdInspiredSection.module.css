@@ -86,7 +86,7 @@
   display: flex;
   gap: clamp(0.8rem, 1.7vw, 1.4rem);
   width: 100%;
-  max-width: 1400px;
+  max-width: none;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -98,8 +98,8 @@
 }
 
 .card {
-  flex: 0 0 min(31vw, 390px);
-  min-width: 340px;
+  flex: 1 1 0;
+  min-width: 0;
   min-height: clamp(420px, 44vw, 560px);
   border-radius: 22px;
   padding: clamp(1rem, 1.7vw, 1.35rem);

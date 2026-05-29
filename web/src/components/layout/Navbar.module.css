@@ -215,6 +215,44 @@
   display: none !important;
 }
 
+@media (max-width: 1100px) {
+  .nav {
+    height: 88px;
+  }
+
+  .container {
+    padding: 0 clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .logo {
+    width: clamp(145px, 17vw, 180px);
+  }
+
+  .right {
+    gap: 0.55rem;
+  }
+
+  .chatBtn,
+  .menuBtn,
+  .loginBtn,
+  .connexionBack {
+    min-height: 46px;
+    font-size: 0.64rem;
+  }
+
+  .chatBtn,
+  .menuBtn {
+    gap: 0.7rem;
+    padding-left: 1rem;
+  }
+
+  .chatIcon,
+  .menuIcon {
+    width: 34px;
+    height: 34px;
+  }
+}
+
 @media (max-width: 768px) {
   .nav {
     height: 84px;
