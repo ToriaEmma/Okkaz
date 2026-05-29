@@ -38,7 +38,6 @@ export default function HeroSection() {
       </div>
 
       <div className={styles.heroOverlayContent}>
-        <div className={styles.scrollIndicator}>Scroll</div>
         <div className={styles.heroBottomText}>
           <h2>
             Accédez au bon bien.

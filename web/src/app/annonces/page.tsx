@@ -95,9 +95,7 @@ function AnnoncesContent() {
           </h1>
         </div>
 
-        <div className={styles.heroOverlayContent}>
-          <div className={styles.scrollIndicator}>Scroll</div>
-        </div>
+        <div className={styles.heroOverlayContent} />
       </section>
 
       <section className={styles.listingShell}>

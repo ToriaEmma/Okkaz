@@ -90,14 +90,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 1.15rem;
   background-color: #1a1a1a;
   color: white;
-  padding: 0 1.25rem;
+  padding: 0.65rem 1.55rem;
   border-radius: 100px;
   font-family: var(--font-interface);
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 720;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
